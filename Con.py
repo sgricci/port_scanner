@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 
+
 class Con:
 	def __init__(self, file):
 		self.file = file
 		self.fh = open(file)
 		self.buffer = self.fh.readlines()
-		self.mem = {'21': 'FTP'};
+		self.mem = {};
 		self.parse()
 		return
 

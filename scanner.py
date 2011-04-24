@@ -1,13 +1,21 @@
 #!/usr/bin/env python
+#
+#
+#	Steve Gricci - 2011
+#   Python port scanner
+#   Original code from: http://www.coderholic.com/python-port-scanner/ (Ben @ Coderholic)
+#   Progress.py is from: http://coreygoldberg.blogspot.com/2010/01/python-command-line-progress-bar-with.html
+
 from socket import *
 import sys
 from Con import *
 from progress import ProgressBar
 if __name__ == '__main__':  
+	# Load Configuration
 	con = Con('ports.ini');
+
 	targetIP = gethostbyname(sys.argv[1])
-	print 'Starting scan on host ', targetIP
-	#scan reserved ports
+	print 'Starting scan on host: ', targetIP
 	p = ProgressBar(600)
 	open_ports = {}
 	for i in range(1, 600):
