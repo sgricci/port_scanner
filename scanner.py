@@ -10,6 +10,7 @@ from socket import *
 import sys
 import subprocess
 from Con import *
+from IPParse import *
 from progress import ProgressBar
 
 def scan_port(ip, port):
@@ -34,24 +35,29 @@ def is_host_up(ip):
 		return True
 	return False
 
-if __name__ == '__main__':  
+if __name__ == '__main__':
 	# Check that an IP/Hostname was sent
 	usage()
 	# Load Configuration
 	con = Con('ports.ini');
-	targetIP = gethostbyname(sys.argv[1])
 
-	# Check if the host is up first
-	if (is_host_up(targetIP) == False):
-		print "DOWN: %s is down" % targetIP
-		sys.exit(1)
+	targetIP = sys.argv[1]
 
-	print 'Starting scan on host: ', targetIP
-	p = ProgressBar(1024)
-	open_ports = {}
-	for i in range(1, 1024):
-		p.update_time(i)
-		if(scan_port(targetIP, i)):
-			open_ports[str(i).rjust(5, '0')] = con.get(i);
-	for port in sorted(open_ports.iterkeys()):
-		print "Port (%s): %s" % (str(int(port)).rjust(5, ' '), open_ports[port])
+	ipparse = IPParse(targetIP)
+	ips = ipparse.parse()
+	for ip in ips:
+		ip = gethostbyname(ip)
+		# Check if the host is up first
+		if (is_host_up(ip) == False):
+			print "DOWN: %s is down" % ip
+			continue
+
+		print 'Starting scan on host: ', ip
+		p = ProgressBar(1024)
+		open_ports = {}
+		for i in range(1, 1024):
+			p.update_time(i)
+			if(scan_port(ip, i)):
+				open_ports[str(i).rjust(5, '0')] = con.get(i);
+		for port in sorted(open_ports.iterkeys()):
+			print "Port (%s): %s" % (str(int(port)).rjust(5, ' '), open_ports[port])
