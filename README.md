@@ -5,9 +5,13 @@ Python Port Scanner
 
 TODO
 ----
+- General command line arguments arguments (getopt)
 - Allow user to hide progress
-- General command line arguments processing (getopt)
 - Write errors to stderr
+BONUS:
 - Rewrite progress bar for greater flexibility
-- Check if host is up [DONE]
-- Allow to specify host range [DONE]
+
+DONE
+----
+- Catch error if port not defined in ports.ini
+- Improved speed by testing via regex if its an IP rather than a host name

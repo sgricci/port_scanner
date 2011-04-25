@@ -11,7 +11,12 @@ class Con:
 		return
 
 	def get(self, config_name):
+		if self.mem.has_key(str(config_name)) != True: 
+			return 'unknown'
 		return self.mem[str(config_name)]
+
+	def total(self):
+		return len(self.mem)
 
 	def parse(self):
 		mem = dict()
